@@ -20,12 +20,12 @@
     if (isset($_GET['id'])) {
         if (/*existance user*/ModelUser::getUser($_GET['id'])) { // supression de l'utilisateur
             ModelUser::suppUser($_GET['id']);
-            ViewTemplate::alert("l'utilisateur a bien ete suprimer", "success", "ListeUsers.php");
+            ViewTemplate::alert("L'utilsateur a été supprimé avec succès.", "success", "ListeUsers.php");
         } else {
-            ViewTemplate::alert("l'utilisateur n'existe pas", "danger", "ListeUsers.php");
+            ViewTemplate::alert("L'utilisateur n'existe pas.", "danger", "ListeUsers.php");
         }
     } else {
-        ViewTemplate::alert(" Aucunes donnees n'as ete transmises", "danger", "ListeUsers.php");
+        ViewTemplate::alert(" Aucune donnée n'a été transmise.", "danger", "ListeUsers.php");
     }
 
 
