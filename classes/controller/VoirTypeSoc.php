@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/all.min.css" />
     <link rel="stylesheet" href="../../css/styles.css" />
-    <title>Portfolio</title>
+    <title>ProfilTypeSoc</title>
 </head>
 
 <body>
@@ -25,6 +25,7 @@
     } else {
         ViewTemplate::alert("utilisateur n'exitepas", 'danger', 'ListeSoc.php');
     }
+    ViewTemplate::footer()
 
 
 

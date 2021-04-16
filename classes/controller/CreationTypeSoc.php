@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/all.min.css" />
     <link rel="stylesheet" href="../../css/styles.css" />
-    <title>Portfolio</title>
+    <title>CreationSoc</title>
 </head>
 
 <body>
@@ -17,12 +17,12 @@
     ViewTemplate::menuSoc();
 
     if (isset($_POST['ajouter'])) { // ajout fait reférence au name du bouton valider 
-
         ModeleTypeSoc::EnvoieTypeSOC($_POST['type_soc']);
-        ViewTemplate::alert("creation reussie", "success", "ListeSoc.php");
+        ViewTemplate::alert("Creation reussie", "success", "ListeSoc.php");
     } else {
         ViewTypeSoc::ajoutSoc();
     };
+    ViewTemplate::footer()
     ?>
 
     <script src="../../js/jquery-3.5.1.min.js"></script>

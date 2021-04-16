@@ -7,7 +7,7 @@ class ViewTypeSoc
         <form class="container mt-2" name="ajout_soc" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
             <div class="form-group">
 
-                <input type="text" class="form-control" name="type_soc" id="formGroupExampleInput" placeholder="Nom du reseau social">
+                <input type="text" class="form-control" name="type_soc" id="formGroupExampleInput" placeholder="Nom du reseau social" required>
             </div>
             <button type="submit" name="ajouter" class="btn btn-danger">Ajouter</button>
             <button type="reset" name="reiniatiliser" class="btn btn-danger">Annuler</button>
@@ -25,11 +25,9 @@ class ViewTypeSoc
                     <th scope="col">#ID</th>
                     <th scope="col">Nom du reseau social </th>
                     <th scope="col">Action</th>
-
                 </tr>
             </thead>
             <tbody>
-
                 <?php
                 foreach ($users as $user) {
                 ?>
@@ -37,14 +35,13 @@ class ViewTypeSoc
                         <th scope="row"> <?php echo $user['id'] ?></th>
                         <td><?php echo $user['type_soc'] ?></td>
                         <td>
-                            <div><a class="btn btn-success col-3 " href="VoirTypeSoc.php?id=<?php echo $user['id'] ?>">Voir type_soc </a>
-                                <a class="btn btn-success  col-3" href="ModifTypeSoc.php?id=<?php echo $user['id'] ?>">Modifier le reseau </a>
-                                <a class="btn btn-success  col-3" name="Suprimer" href="DeleteSoc.php?id=<?php echo $user['id'] ?>">Suprimer le reseau </a>
+                            <div class="text-right "><a class="btn btn-success  " href="VoirTypeSoc.php?id=<?php echo $user['id'] ?>">Voir type_soc </a>
+                                <a class="btn btn-success  " href="ModifTypeSoc.php?id=<?php echo $user['id'] ?>">Modifier le reseau </a>
+                                <a class="btn btn-success  " name="Suprimer" href="DeleteSoc.php?id=<?php echo $user['id'] ?>">Suprimer le reseau </a>
                             </div>
                         </td>
 
                     </tr>
-
                 <?php
                 }
 
@@ -59,21 +56,12 @@ class ViewTypeSoc
     public static function infoSoc($id)
     {
         $users2 = ModeleTypeSoc::getSoc($id)
-
-
     ?>
-
-        <p><?php echo $users2['type_soc'] ?></p>
-
-
-
-
-
+        <h3>id:<?php echo " " . $users2['id'] ?> <br> Nom du reseau:<?php echo " " . $users2['type_soc'] ?> </h3>
     <?php
     }
     public static function modifSoc($id)
     {
-
         $users = ModeleTypeSoc::getSoc($id);
     ?>
         <form class="container mt-2" name="ajout_soc" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
