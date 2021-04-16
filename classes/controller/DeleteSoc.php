@@ -11,40 +11,24 @@
 </head>
 
 <body>
-
-    <?php
-    require_once "../view/ViewUser.php";
-    require_once "../model/ModelUser.php";
+    <?php require_once "../model/ModeltypeSoc.php";
+    require_once "../view/ViewTypeSoc.php";
     require_once "../view/ViewTemplate.php";
-    ViewTemplate::menu();
-
-
-    if (isset($_POST['ajout'])) { // ajout fait reférence au name du bouton valider 
-
-        ModelUser::EnvoieDonnee($_POST['nom'], $_POST['prenom'], $_POST['mail'], $_POST['tel'], $_POST['adresse'], $_POST['photo'], $_POST['description']);
-        ViewTemplate::alert("Creation reussie", "success", "ListeUsers.php");
+    
+    if (isset($_GET['id'])) {
+        if (/*existance user*/ModeleTypeSoc::getSoc($_GET['id'])) { // supression de l'utilisateur
+            ModeleTypeSoc::suppSoc($_GET['id']);
+            ViewTemplate::alert("Le reseau a été supprimé avec succès.", "success", "ListeSoc.php");
+        } else {
+            ViewTemplate::alert("Le reseau n'existe pas.", "danger", "ListeSoc.php");
+        }
     } else {
-        ViewUser::ajoutUser();
-    };
+        ViewTemplate::alert(" Aucune donnée n'a été transmise.", "danger", "ListeSoc.php");
+    }
 
 
-
-
-
-
-
-
-    ViewTemplate::footer();
 
     ?>
-
-
-
-
-
-
-
-
 
     <script src="../../js/jquery-3.5.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>

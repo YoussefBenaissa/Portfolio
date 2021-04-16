@@ -11,40 +11,19 @@
 </head>
 
 <body>
-
-    <?php
-    require_once "../view/ViewUser.php";
-    require_once "../model/ModelUser.php";
+    <?php require_once "../model/ModeltypeSoc.php";
+    require_once "../view/ViewTypeSoc.php";
     require_once "../view/ViewTemplate.php";
-    ViewTemplate::menu();
+    ViewTemplate::menuSoc();
 
+    if (isset($_POST['ajouter'])) { // ajout fait reférence au name du bouton valider 
 
-    if (isset($_POST['ajout'])) { // ajout fait reférence au name du bouton valider 
-
-        ModelUser::EnvoieDonnee($_POST['nom'], $_POST['prenom'], $_POST['mail'], $_POST['tel'], $_POST['adresse'], $_POST['photo'], $_POST['description']);
-        ViewTemplate::alert("Creation reussie", "success", "ListeUsers.php");
+        ModeleTypeSoc::EnvoieTypeSOC($_POST['type_soc']);
+        ViewTemplate::alert("creation reussie", "success", "ListeSoc.php");
     } else {
-        ViewUser::ajoutUser();
+        ViewTypeSoc::ajoutSoc();
     };
-
-
-
-
-
-
-
-
-    ViewTemplate::footer();
-
     ?>
-
-
-
-
-
-
-
-
 
     <script src="../../js/jquery-3.5.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
