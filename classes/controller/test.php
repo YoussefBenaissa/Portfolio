@@ -7,18 +7,17 @@
     <link rel="stylesheet" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/all.min.css" />
     <link rel="stylesheet" href="../../css/styles.css" />
-    <title>ListeSoc</title>
+    <title>test</title>
 </head>
 
 <body>
-    <?php require_once "../model/ModeltypeSoc.php";
-    require_once "../view/ViewTypeSoc.php";
-    require_once "../view/ViewTemplate.php";
+    <?php
+     require_once "../view/ViewTemplate.php";
+    require_once "../view/ViewSocial.php";
+    require_once "../model/ModelSocial.php";
     ViewTemplate::menu();
-    ViewTypeSoc::listeUsers();
+    ViewSocial::listeSocial();
     ViewTemplate::footer();
-
-
     ?>
 
     <script src="../../js/jquery-3.5.1.min.js"></script>

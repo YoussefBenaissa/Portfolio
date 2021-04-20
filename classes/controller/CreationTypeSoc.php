@@ -14,7 +14,7 @@
     <?php require_once "../model/ModeltypeSoc.php";
     require_once "../view/ViewTypeSoc.php";
     require_once "../view/ViewTemplate.php";
-    ViewTemplate::menuSoc();
+    ViewTemplate::menu();
 
     if (isset($_POST['ajouter'])) { // ajout fait reférence au name du bouton valider 
         ModeleTypeSoc::EnvoieTypeSOC($_POST['type_soc']);

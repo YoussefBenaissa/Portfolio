@@ -7,18 +7,21 @@
     <link rel="stylesheet" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/all.min.css" />
     <link rel="stylesheet" href="../../css/styles.css" />
-    <title>ListeSoc</title>
+    <title>test</title>
 </head>
 
 <body>
-    <?php require_once "../model/ModeltypeSoc.php";
-    require_once "../view/ViewTypeSoc.php";
+    <?php
     require_once "../view/ViewTemplate.php";
-    ViewTemplate::menu();
-    ViewTypeSoc::listeUsers();
-    ViewTemplate::footer();
+    require_once "../view/ViewSocial.php";
+    require_once "../model/ModelSocial.php";
 
-
+    if (isset($_POST['ajout'])) { // ajout fait reférence au name du bouton valider 
+        ModelSocial::ajoutSocial(10, $_POST['type_soc_id'], $_POST['lien']); // ici l'userID est en dur est donc je veux manipuler l'utilisateur 1 je doit mettre 1
+        ViewTemplate::alert("Creation reussie", "success", "ListeRS.php");
+    } else {
+        ViewSocial::ajoutSocial();
+    };
     ?>
 
     <script src="../../js/jquery-3.5.1.min.js"></script>

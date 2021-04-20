@@ -14,7 +14,7 @@
     <?php require_once "../model/ModeltypeSoc.php";
     require_once "../view/ViewTypeSoc.php";
     require_once "../view/ViewTemplate.php";
-    ViewTemplate::menuSoc();
+    ViewTemplate::menu();
 
     if (isset($_GET["id"])) {
         if (ModeleTypeSoc::getSoc($_GET["id"])) {

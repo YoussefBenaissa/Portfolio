@@ -14,6 +14,7 @@
     <?php require_once "../model/ModeltypeSoc.php";
     require_once "../view/ViewTypeSoc.php";
     require_once "../view/ViewTemplate.php";
+    ViewTemplate::menu();
 
     if (isset($_GET['id'])) {
         if (ModeleTypeSoc::getSoc($_GET['id'])) {
@@ -33,6 +34,7 @@
             ViewTemplate::alert("Aucune donnée n'a été transmise.", "danger", "ListeSoc.php");
         }
     }
+    ViewTemplate::footer();
 
 
 
