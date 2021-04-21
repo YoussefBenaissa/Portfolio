@@ -15,13 +15,15 @@
     require_once "../view/ViewTemplate.php";
     require_once "../view/ViewSocial.php";
     require_once "../model/ModelSocial.php";
+    ViewTemplate::menu();
 
     if (isset($_POST['ajout'])) { // ajout fait reférence au name du bouton valider 
-        ModelSocial::ajoutSocial(10, $_POST['type_soc_id'], $_POST['lien']); // ici l'userID est en dur est donc je veux manipuler l'utilisateur 1 je doit mettre 1
+        ModelSocial::ajoutSocial(1, $_POST['type_soc_id'], $_POST['lien']); // ici l'userID est en dur est donc si je veux manipuler l'utilisateur 1 je doit mettre 1
         ViewTemplate::alert("Creation reussie", "success", "ListeRS.php");
     } else {
         ViewSocial::ajoutSocial();
     };
+    viewTemplate::footer();
     ?>
 
     <script src="../../js/jquery-3.5.1.min.js"></script>

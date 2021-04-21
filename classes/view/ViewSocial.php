@@ -58,7 +58,7 @@ class ViewSocial
                         <td>
                             <div class="text-right ">
                                 <a class="btn btn-success  " href="ModifRS.php?id=<?php echo $user['social_id'] ?>">Modifier </a>
-                                <a class="btn btn-success  " name="">Suprimer </a>
+                                <a class="btn btn-success  " href="DeleteRS.php?id=<?php echo $user['social_id'] ?>">Suprimer </a>
                             </div>
                         </td>
 

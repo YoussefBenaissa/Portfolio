@@ -4,7 +4,7 @@ class ViewTemplate
     public static function alert($message, $type, $lien)
     {
 ?>
-        <div class="alert alert-<?php echo $type; ?>" role="alert">
+        <div class=" text-center alert alert-<?php echo $type; ?>" role="alert">
             <?php echo $message; ?>
             <br />Cliquez <a href="<?php echo $lien ?>"> ici</a> pour continuer la navigation.
         </div>
@@ -42,9 +42,17 @@ class ViewTemplate
                         <a class="nav-link" href="ListeSoc.php">Listes des reseaux</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ListeRS.php">ListesRs</a>
+                        <a class="nav-link" href="CreationSocial.php">CreationUser_soc</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="ListeRS.php">ListesUser_soc</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="CreationTypeReferences.php">Ajout type reference</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ListeTypeRef.php">Liste Reference</a>
+                    </li>
 
 
                 </ul>

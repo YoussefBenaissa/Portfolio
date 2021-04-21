@@ -29,7 +29,6 @@ class ModelSocial
         from user_soc
         INNER JOIN user
         ON user_id=user.id
-
         INNER JOIN social
         ON user_soc.social_id=social.id
 
@@ -65,6 +64,18 @@ class ModelSocial
         $requete->execute([
             ':type_soc_id' => $type_soc_id,
             ':lien' => $lien,
+            ':id' => $id
+        ]);
+    }
+    public static function suppRs($id)
+    {
+        $idcon = connexion();
+        $requet = $idcon->prepare("DELETE  social, user_soc 
+        FROM social
+        INNER JOIN user_soc
+        ON social.id=user_soc.social_id
+        WHERE social.id=:id");
+        $requet->execute([
             ':id' => $id
         ]);
     }
