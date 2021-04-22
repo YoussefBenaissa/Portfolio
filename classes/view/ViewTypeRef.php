@@ -42,8 +42,8 @@ class ViewTypeRef
                         <td class="text-center"><?php echo $user['support'] ?></td>
                         <td>
                             <div class=" text-center">
-                                <a class="btn btn-success col-3 " href="">Modifier </a>
-                                <a class="btn btn-success  col-3" name="">Suprimer </a>
+                                <a class="btn btn-success  " href="ModifTypeRef.php?id=<?php echo $user['id'] ?>">Modifier </a>
+                                <a class="btn btn-success " href="DeleteTypeRef.php?id=<?php echo $user['id'] ?>">Suprimer </a>
                             </div>
                         </td>
 
@@ -57,6 +57,22 @@ class ViewTypeRef
             </tbody>
         </table>
 
-<?php
+    <?php
     }
+    public static function modifTypeRef($id)
+    {
+        $users = ModeleTypeRef::getRef($id);
+    ?>
+        <form class="container mt-2" name="ajout_ref" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="id" name="id" value="<?php echo $users['id'] ?>">
+
+                <input type="text" class="form-control" name="type_ref" id="formGroupExampleInput" value="<?php echo $users['type_ref'] ?>">
+                <input type="text" class="form-control" name="support" id="formGroupExampleInput" value="<?php echo $users['support'] ?>">
+            </div>
+            <button type="submit" name="modif" class="btn btn-primary">Modifier</button>
+            <button type="reset" name="annuler" class="btn btn-danger">Annuler</button>
+        </form>
+
+<?php }
 }

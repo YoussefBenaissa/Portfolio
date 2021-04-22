@@ -50,13 +50,13 @@ class ViewSocial
                 foreach ($users as $user) {
                 ?>
                     <tr>
-                        <th scope="row"> <?php echo $user['user_id'] ?></th>
-                        <td><?php echo $user['nom'] ?></td>
-                        <td><?php echo $user['prenom'] ?></td>
-                        <td><?php echo $user['type_soc'] ?></td>
-                        <td><?php echo $user['lien'] ?></td>
+                        <th class="text-center" scope="row"> <?php echo $user['user_id'] ?></th>
+                        <td class="text-center"><?php echo $user['nom'] ?></td>
+                        <td class="text-center"><?php echo $user['prenom'] ?></td>
+                        <td class="text-center"><?php echo $user['type_soc'] ?></td>
+                        <td class="text-center"><?php echo $user['lien'] ?></td>
                         <td>
-                            <div class="text-right ">
+                            <div class="text-center ">
                                 <a class="btn btn-success  " href="ModifRS.php?id=<?php echo $user['social_id'] ?>">Modifier </a>
                                 <a class="btn btn-success  " href="DeleteRS.php?id=<?php echo $user['social_id'] ?>">Suprimer </a>
                             </div>
@@ -93,7 +93,7 @@ class ViewSocial
                     }
                     ?>
                 </select>
-                <div class=" form-group">
+                <div class="  form-group">
                     <input type="url" name="lien" id="lien" value="<?php echo $selectedRS['lien'] ?>" class="form-control" aria-describedby="lien" placeholder="Lien" required>
                 </div>
                 <button type="submit" class="btn btn-primary" name="modif">Modifier</button>
