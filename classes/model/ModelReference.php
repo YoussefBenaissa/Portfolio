@@ -2,37 +2,25 @@
 require_once "connexion.php";
 class ModelReference
 {
-    static function EnvoieReference($typeRefId, $Nom, $Techno, $Contributeur, $userId, $lien)
+    static function EnvoieReference($userId, $typeRefId, $Nom, $Techno, $Contributeur, $lien)
     {
         $idcon = connexion();
         $requette = $idcon->prepare('INSERT INTO reference values (null,?,?,?,?)');
         $requette->execute(array($typeRefId, $Nom, $Techno, $Contributeur));
 
         $idRef = $idcon->lastInsertId();
-        $requete2 = $idcon->prepare("
-                    INSERT INTO user_ref VALUES (:userId,:idref, :lien)
-                ");
+        $requete2 = $idcon->prepare(' INSERT INTO user_ref VALUES (:userId,:idref, :lien)');
         $requete2->execute([
             ':userId' => $userId,
             ':idref' => $idRef,
             ':lien' => $lien,
         ]);
     }
-    public  static function listeSocial()
+    public  static function listeReference()
     {
 
         $idcon = connexion();
-        $requete3 = $idcon->prepare('SELECT user.id as user_id, lien, user.nom, prenom, type_ref, reference.id as reference_id
-        from user_ref
-        INNER JOIN user
-        ON user_id=user.id
-        INNER JOIN reference
-        ON user_ref.ref_id=reference.id
-
-        INNER JOIN type_ref
-        ON ref_id=type_ref.id
-
-        ORDER BY user_id');
+        $requete3 = $idcon->prepare('SELECT user.id as user_id, contributeurs,techno, lien, user.nom, reference.nom as nom2, prenom, type_ref, reference.id as reference_id FROM reference INNER JOIN user_ref ON reference.id=user_ref.ref_id inner JOIN user ON user.id=user_ref.user_id inner join type_ref ON type_ref.id=reference.type_ref_id ORDER by user.id');
         $requete3->execute();
         return $requete3->fetchAll();
     }
@@ -50,18 +38,21 @@ class ModelReference
         ]);
         return $requete->fetch();
     }
-    public static function modifRef($id, $type_ref, $lien)
+    public static function modifRef($id, $type_ref_id, $lien, $techno, $contributeurs, $nom)
     {
         $idcon = connexion();
         $requete = $idcon->prepare('UPDATE reference
         INNER JOIN user_ref
-        ON ref_id=reference.id
-        SET ref_id=:ref_id, lien=:lien
+        ON user_ref.ref_id=reference.id
+        SET reference.type_ref_id=:type_ref_id, lien=:lien,nom=:nom, techno=:techno, contributeurs=:contributeurs
         WHERE reference.id=:id');
         $requete->execute([
-            ':ref_id' => $type_ref,
+            ':type_ref_id' => $type_ref_id,
             ':lien' => $lien,
-            ':id' => $id
+            ':id' => $id,
+            ':techno' => $techno,
+            ':contributeurs' => $contributeurs,
+            ':nom' => $nom
         ]);
     }
     public static function suppRef($id)

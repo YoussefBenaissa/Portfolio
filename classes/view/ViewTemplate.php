@@ -30,7 +30,7 @@ class ViewTemplate
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="creationuser.php">creation user</a>
+                        <a class="nav-link" href="creationuser.php">Creation user</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="listeusers.php">Liste User</a>
@@ -52,6 +52,12 @@ class ViewTemplate
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ListeTypeRef.php">Liste Reference</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="CreationReference.php">Creation Reference</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ListeReference.php">ListeReference</a>
                     </li>
 
 
