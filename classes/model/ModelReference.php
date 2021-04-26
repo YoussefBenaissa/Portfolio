@@ -20,12 +20,13 @@ class ModelReference
     {
 
         $idcon = connexion();
-        $requete3 = $idcon->prepare('SELECT user.id as user_id, contributeurs,techno, lien, user.nom, reference.nom as nom2, prenom, type_ref, reference.id as reference_id FROM reference INNER JOIN user_ref ON reference.id=user_ref.ref_id inner JOIN user ON user.id=user_ref.user_id inner join type_ref ON type_ref.id=reference.type_ref_id ORDER by user.id');
+        $requete3 = $idcon->prepare('SELECT user.id as user_id, contributeurs,techno, lien, user.nom, reference.nom as nom2, prenom, support, type_ref, reference.id as reference_id FROM reference INNER JOIN user_ref ON reference.id=user_ref.ref_id inner JOIN user ON user.id=user_ref.user_id inner join type_ref ON type_ref.id=reference.type_ref_id ORDER by user.id');
         $requete3->execute();
         return $requete3->fetchAll();
     }
     public static function getReference($id)
     {
+
         $idcon = connexion();
         $requete = $idcon->prepare(" 
             SELECT * FROM reference
@@ -38,21 +39,22 @@ class ModelReference
         ]);
         return $requete->fetch();
     }
-    public static function modifRef($id, $type_ref_id, $lien, $techno, $contributeurs, $nom)
+    public static function modifReference($idRef, $idType, $nom, $techno, $contributeurs, $lien)
     {
         $idcon = connexion();
-        $requete = $idcon->prepare('UPDATE reference
-        INNER JOIN user_ref
-        ON user_ref.ref_id=reference.id
-        SET reference.type_ref_id=:type_ref_id, lien=:lien,nom=:nom, techno=:techno, contributeurs=:contributeurs
-        WHERE reference.id=:id');
+        $requete = $idcon->prepare(" UPDATE reference
+            INNER JOIN user_ref
+            ON ref_id=reference.id
+            SET type_ref_id=:idType, nom=:nom, techno=:techno, contributeurs=:contributeurs,   lien=:lien
+            WHERE reference.id=:idRef
+        ");
         $requete->execute([
-            ':type_ref_id' => $type_ref_id,
-            ':lien' => $lien,
-            ':id' => $id,
+            ':idType' => $idType,
+            ':nom' => $nom,
             ':techno' => $techno,
             ':contributeurs' => $contributeurs,
-            ':nom' => $nom
+            ':lien' => $lien,
+            ':idRef' => $idRef,
         ]);
     }
     public static function suppRef($id)

@@ -29,7 +29,7 @@ class ViewReference
                     <input type="text" class="form-control" name="nom" id="formGroupExampleInput" placeholder="Nom" required>
 
                     <input type="text" class="form-control" name="techno" id="formGroupExampleInput" placeholder="Techno" required>
-                    <input type="text" class="form-control" name="contributeurs" id="formGroupExampleInput" placeholder="Contributeurs" required>
+                    <textarea class="form-control mt-1" name="contributeurs" id="contributeurs" rows="3" placeholder="Contributeur"></textarea><br>
                 </div>
                 <div class=" form-group">
                     <input type="url" name="lien" id="lien" class="form-control" aria-describedby="lien" placeholder="Lien" required>
@@ -55,6 +55,7 @@ class ViewReference
                     <th scope="col">Type_Ref_ID </th>
                     <th scope="col">Nom Reference</th>
                     <th scope="col">Techno</th>
+                    <th scope="col">Support</th>
                     <th scope="col">Contributeurs</th>
                     <th scope="col">Lien</th>
                     <th scope="col">Action</th>
@@ -72,6 +73,7 @@ class ViewReference
                         <td class="text-center"><?php echo $user['type_ref'] ?></td>
                         <td class="text-center"><?php echo $user['nom2'] ?></td>
                         <td class="text-center"><?php echo $user['techno'] ?></td>
+                        <td class="text-center"><?php echo $user['support'] ?></td>
                         <td class="text-center"><?php echo $user['contributeurs'] ?></td>
                         <td class="text-center"><?php echo $user['lien'] ?></td>
                         <td>
@@ -93,39 +95,40 @@ class ViewReference
 
     <?php
     }
-    public static function modifRef($id)
+    public static function modifReference($id)
     {
-        $typesRS = ModeleTypeRef::listeRef();
-        $selectedRS = ModelReference::getReference($id);
+        $typesRef = ModeleTypeRef::listeRef();
+        $selectedRef = ModelReference::getReference($id);
     ?>
         <div class="container">
-            <form name="modif_reference" id="modif_reference" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+            <form name="modif_ref" id="modif_ref" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
                 <input type="hidden" name="id" name="id" value="<?php echo $id; ?>" />
                 <select name="type_ref_id" class="form-control" required>
                     <?php
-                    foreach ($typesRS as $typeRS) {
+                    foreach ($typesRef as $typeRef) {
                     ?>
-                        <option value="<?php echo $typeRS['id'] ?>" <?php echo $typeRS['id'] == $selectedRS['type_ref_id'] ? "selected" : "" ?>>
-                            <?php echo $typeRS['type_ref'] ?>
+                        <option value="<?php echo $typeRef['id'] ?>" <?php echo $typeRef['id'] == $selectedRef['type_ref_id'] ? "selected" : "" ?>>
+                            <?php echo $typeRef['type_ref'] . " - " . $typeRef['support'] ?>
                         </option>
                     <?php
                     }
                     ?>
                 </select>
-                <div class="form-group">
-                    <input type="url" name="lien" id="lien" value="<?php echo $selectedRS['lien'] ?>" class="form-control" aria-describedby="lien" placeholder="Lien" required>
+                <div class=" form-group">
+                    <input type="text" name="nom" id="nom" value="<?php echo $selectedRef['nom'] ?>" class="form-control" aria-describedby="lien" placeholder="Lien" required>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="techno" id="techno" value="<?php echo $selectedRS['techno'] ?>" class="form-control" aria-describedby="techno" placeholder="techno" required>
+                <div class=" form-group">
+                    <input type="text" name="techno" id="techno" value="<?php echo $selectedRef['techno'] ?>" class="form-control" aria-describedby="lien" placeholder="Lien" required>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="contributeurs" id="lien" value="<?php echo $selectedRS['contributeurs'] ?>" class="form-control" aria-describedby="contributeurs" placeholder="contributeurs" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="nom" id="nom" value="<?php echo $selectedRS['nom'] ?>" class="form-control" aria-describedby="nom" placeholder="nom" required>
+
+                <textarea class="form-control" name="contributeurs" id="contributeurs" rows="3"><?php echo $selectedRef['contributeurs'] ?></textarea><br>
+
+                <div class=" form-group">
+                    <input type="url" name="lien" id="lien" value="<?php echo $selectedRef['lien'] ?>" class="form-control" aria-describedby="lien" placeholder="Lien" required>
                 </div>
                 <button type="submit" class="btn btn-primary" name="modif">Modifier</button>
                 <button type="reset" class="btn btn-danger">Annuler</button>
+
             </form>
         </div>
 <?php

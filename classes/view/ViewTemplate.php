@@ -4,7 +4,7 @@ class ViewTemplate
     public static function alert($message, $type, $lien)
     {
 ?>
-        <div class=" text-center alert alert-<?php echo $type; ?>" role="alert">
+        <div class=" container text-center alert alert-<?php echo $type; ?>" role="alert">
             <?php echo $message; ?>
             <br />Cliquez <a href="<?php echo $lien ?>"> ici</a> pour continuer la navigation.
         </div>
