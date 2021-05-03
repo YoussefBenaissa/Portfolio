@@ -12,17 +12,23 @@
 
 <body>
     <?php
-     require_once "../view/ViewTemplate.php";
+    require_once "../view/ViewTemplate.php";
     require_once "../view/ViewSocial.php";
     require_once "../model/ModelSocial.php";
+    require_once "../view/ViewUser.php";
     ViewTemplate::menu();
-    ViewSocial::listeSocial();
+
+    viewUser::listeUsers();
+    
+
     ViewTemplate::footer();
     ?>
 
     <script src="../../js/jquery-3.5.1.min.js"></script>
+
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/all.min.js"></script>
+
 </body>
 
 </html>

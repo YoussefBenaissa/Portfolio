@@ -1,37 +1,40 @@
 <?php
 require_once "../model/ModelUser.php";
+require_once "../utils/Utils.php";
 
 class ViewUser
 {
     public static function ajoutUser()
     {
+        isset($_POST['ajout']) ? $formSubmit = true : $formSubmit = false;
 ?>
         <div class="container mt-2">
-            <form name="ajout_user" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+            <div class="text-center" id='erreurs'></div>
+            <form name="ajout_user" id="form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input type="text" name="nom" id="nom" class="form-control" aria-describedby="nom" placeholder="Nom" required>
+                    <input type="text" name="nom" id="nom" class="form-control" aria-describedby="nom" value="<?php echo $formSubmit ? $_POST['nom'] : '' ?>" placeholder="Nom" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="prenom" id="prenom" class="form-control" aria-describedby="prenom" placeholder="Prénom" required>
+                    <input type="text" name="prenom" id="prenom" class="form-control" aria-describedby="prenom" value="<?php echo $formSubmit ? $_POST['prenom'] : '' ?>" placeholder="Prénom" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" name="mail" id="mail" class="form-control" aria-describedby="mail" placeholder="Adresse mail" required>
+                    <input type="email" name="mail" id="mail" class="form-control" aria-describedby="mail" value="<?php echo $formSubmit ? $_POST['mail'] : '' ?>" placeholder="Adresse mail" required>
                 </div>
                 <div class="form-group">
-                    <input type="tel" name="tel" id="tel" class="form-control" aria-describedby="tel" placeholder="Tel" required>
+                    <input type="tel" name="tel" id="tel" class="form-control" aria-describedby="tel" value="<?php echo $formSubmit ? $_POST['tel'] : '' ?>" placeholder="Tel" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="adresse" id="adresse" class="form-control" aria-describedby="adresse" placeholder="Adresse" required>
+                    <input type="text" name="adresse" id="adresse" class="form-control" aria-describedby="adresse" value="<?php echo $formSubmit ? $_POST['adresse'] : '' ?>" placeholder="Adresse" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="photo" id="photo" class="form-control" aria-describedby="photo" placeholder="Photo" required>
+                    <input type="file" name="photo" id="photo" accept="image/jpg,.jpeg,.gif,.png" aria-describedby="photo" placeholder="Photo" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" class="form-control" aria-describedby="description" required></textarea>
+                    <textarea name="description" id="description" class="form-control" aria-describedby="description" required><?php echo $formSubmit ? $_POST['description'] : '' ?></textarea>
                 </div>
 
-                <button type="submit" name="ajout" class="btn btn-primary">Ajouter</button>
+                <button type="submit" id="submit" name="ajout" class="btn btn-primary">Ajouter</button>
                 <button type="reset" name="annuler" class="btn btn-danger">Annuler</button>
             </form>
         </div>
@@ -62,7 +65,7 @@ class ViewUser
                 ?>
                     <tr>
                         <th scope="row"> <?php echo $user['id'] ?></th>
-                        <td><img class="rounded-circle" src="../../images/<?php echo $user['photo'] ?>.jpg" width="80" height="80"> </td> <!-- attention ici les images sont uniquement au format jpg-->
+                        <td><img class="rounded-circle" src="../../uploads/<?php echo $user['photo'] ?>" width="80" height="80"> </td> <!-- attention ici les images sont uniquement au format jpg-->
                         <td><?php echo $user['nom'] ?></td>
                         <td><?php echo $user['prenom'] ?></td>
                         <td><?php echo $user['mail'] ?></td>
@@ -72,7 +75,10 @@ class ViewUser
                         <td>
                             <div><a class="btn btn-success col-12 " href="VoirProfil.php?id=<?php echo $user['id'] ?>">Voir profil </a>
                                 <a class="btn btn-success mt-1 col-12" href="ModifProfil.php?id=<?php echo $user['id'] ?>">Modifier profil </a>
-                                <a class="btn btn-success mt-1 col-12" name="Suprimer" href="deleteprofil.php?id=<?php echo $user['id'] ?>">Suprimer profil </a>
+
+                                <button type="button" class="btn btn-success mt-1 col-12" data-toggle="modal" data-target="#modal">
+                                    Suprimer
+                                </button>
                             </div>
                         </td>
 
@@ -86,6 +92,26 @@ class ViewUser
 
             </tbody>
         </table>
+        <div class="modal fade" id="modal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Supression User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Etes vous sur de vouloir suprimer cette utilisateur ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                        <a class="btn btn-success" name="Suprimer" href="deleteprofil.php?id=<?php echo $user['id'] ?>">Suprimer</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <?php
     }
@@ -98,7 +124,7 @@ class ViewUser
 
         <div class="container mb-2">
             <div class=" card" style="width: 18rem;">
-                <img class="rounded-circle" src="../../images/<?php echo $users2['photo'] ?>.jpg" width="150" height="150">
+                <img class="rounded-circle" src="../../uploads/ <?php echo $users2['photo'] ?>" width="150" height="150">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $users2['nom'] ?></h5>
                     <p class="card-text"><?php echo $users2['prenom'] ?></p>
@@ -140,7 +166,7 @@ class ViewUser
                     <input type="text" name="adresse" id="adresse" class="form-control" aria-describedby="adresse" placeholder="Adresse" value="<?php echo $users3['adresse'] ?>" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="photo" id="photo" class="form-control" aria-describedby="photo" placeholder="Photo" value="<?php echo $users3['photo'] ?>" required>
+                    <input type="file" accept="image/jpg,.jpeg,.gif,.png" name="photo" id="photo" aria-describedby="photo" placeholder="Photo" value="<?php echo $users3['photo'] ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
