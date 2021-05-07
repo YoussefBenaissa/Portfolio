@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/all.min.css" />
     <link rel="stylesheet" href="../../css/styles.css" />
-    <title>le get</title>
+    <title>VoirProfil</title>
 </head>
 
 <body>
@@ -17,8 +17,8 @@
     ViewTemplate::menu();
     ?>
 
-    <h1> Profil Utilisateur</h1>
-    <p>Id:<?php echo $_GET["id"] ?></p>
+    <h1> Profil Utilisateur:</h1>
+
 
 
 

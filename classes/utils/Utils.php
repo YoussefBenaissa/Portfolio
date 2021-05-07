@@ -1,4 +1,5 @@
 <?php
+
 class Utils
 {
     public static function upload($extenssion, $fichier)
@@ -50,7 +51,7 @@ class Utils
         substr(   md5($file_name)  , 10  )
         ensuite je concatene l'extension
         4.3 j'affecte cette valeur au nom du fichier (le nv nom généré)*/
-        while (file_exists("../../photos/$file_name")) {
+        while (file_exists(ROOT_DIR . "/uploads/$file_name")) {
             $file_name = substr(md5($file_name), 10) . ".$file_ext";
         }
         /*5- tester l'existance du fichier pour eviter d'ecraser un autre qui a le meme nom
@@ -59,11 +60,10 @@ class Utils
         si un fichier porte le meme nom, on renomme le fichier en cours encore une fois
         jusqu'à ce qu'on obtienne un nom qui n'existe pas
         */
-        if ($errors === "") //si je n'ai pas d'erreurs cad la chaine $errors est vide 
-        {
-            if (move_uploaded_file($file_tmp, "../../uploads/" . $file_name)) {
+        if ($errors === "") {
+            if (move_uploaded_file($file_tmp, ROOT_DIR . "/uploads/" . $file_name)) {
                 $uploadOk = true;
-                return ["uploadOk" => $uploadOk, "file_name" => $file_name, "errors" => $errors]; // je tente de faire un upload sur le serveur, je teste si cela aboutit, je mets uploadOk à true, et je renvoie des données
+                return ["uploadOk" => $uploadOk, "file_name" => $file_name, "errors" => $errors];
             } else {
                 $errors .= "Echec de l'upload. <br/>";
             }
@@ -72,18 +72,19 @@ class Utils
         }
     }
 
-    
+
     public static function validation($str, $type)
     {
         $valide = false;
         //https://www.php.net/manual/fr/regexp.reference.unicode.php
         $tabRegex = [
+            "id" => "/[\d]+/",
             "non" => "//",
             "test" => '/[\w]123/',
             "nom" => "/^[\p{L}\s]{2,}$/u",
             "prenom" => "/^[\p{L}\s]{2,}$/u", // le u est important il siginfie l'encodage universel et le \p{L} cest pour les caractere acentue par exemple pour stéphane
             "tel" => "/^[+]?[0-9]{8,}$/",
-            "photo" => "/^[\w\s-._]{1,}(.jpg|.jpeg|.png|.gif)$/",
+            "photo" => "/^[\w\s\-\.]{1,22}(.jpg|.jpeg|.png|.gif)$/",
 
         ];
 

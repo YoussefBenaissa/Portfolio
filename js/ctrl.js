@@ -11,6 +11,7 @@ typesTab = {
   tel: /^[0-9]{8,}$/,
   photo: /^[\w]{2,}(.jpg|.jpeg|.png|.gif)$/,
   test: /^[a-zA-Z]+$/,
+  id: /[\d]+/,
 };
 
 function validation(str, type) {
@@ -51,6 +52,21 @@ $("#form").submit(function (e) {
   let types = ["nom", "prenom", "tel"];
   valider(donnees, types, e);
 });
+$("#form2").submit(function (e) {
+  e.preventDefault();
+  let donnees = [
+    $("#id").val(),
+    $("#nom2").val(),
+    $("#prenom2").val(),
+    $("#tel2").val(),
+  ];
+  let types = ["id", "nom", "prenom", "tel"];
+  valider(donnees, types, e);
+  let donneesForm = $(this).serializeArray(); // cette fontion retourne un tab de la forme  Object { name: "id", value: "11" }
+  console.log(donneesForm);
+  data= tabToObject(donneesForm);
+  
+});
 
 /*explication
 
@@ -77,7 +93,7 @@ $("#nom").val() ==> "nom"
 $("#prenom").val() ==> "prenom"
 $("#tel").val() ==> "tel"
 NB : la fonction validation retourne un tab (indexé) au format [valide, message]
-valide (boolean) : pour sire si la val du champ de form est conforme au type associé ou pas
+valide (boolean) : pour dire si la val du champ de form est conforme au type associé ou pas
 message (cad message d'erreur) : vide si c conforme, message d'erreur sinon
 fonctionnement de la fonction validation()
 elle prend deux param (la val et le type)
@@ -128,7 +144,7 @@ car tab est format [valide, message]
 dans ce cas (cad que j'ai des erreurs ), je les concatène dans la var erreurs
 et je fais tt mon traitement à toutes les cases des tab donnees et types
 (dans une boucle for)
-rayen hidri — Aujourd’hui à 15:09
+
 5- dans la vue, on ajoute une div qui un id erreurs au dessus de la balise form
 <div id="erreurs"></div>
 6-
@@ -144,3 +160,108 @@ ensuite, je mets ce contenu généré (alerte) dans la div qui a l'id erreur
 7- j'empeche le form de son comportment par defaut (soumission des données)  ==> pas de transmission, et on reste sur la meme page
 
 */
+
+$(".supp-user").click(function () {
+  $(".lien-supp").attr("href", "DeleteProfil.php?id=" + $(this).attr("id"));
+});
+// Modif User
+$(".modif-user").click(function (e) {
+  e.preventDefault();
+  let request = $.ajax({
+    type: "GET",
+    url: $(this).attr("href"),
+    dataType: "html",
+  });
+
+  request.done(function (reponse) {
+    $(".modal-modif .modal-body").html(reponse); // utiliser la console log pour visualiser le retour de la requette
+  });
+
+  request.fail(function (http_error) {
+    //Code à jouer en cas d'éxécution en erreur du script du PHP
+
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+});
+//Suprimer User
+$(".lien-supp").click(function (e) {
+  e.preventDefault();
+
+  let request = $.ajax({
+    type: "GET",
+    url: $(this).attr("href"),
+    dataType: "html",
+  });
+
+  request.done(function (reponse) {
+    $(".annuler").trigger("click"); //je génère un clic artficiel sur le bouton annuler $(".annuler").click(); cette methode marche aussi
+    listeUsers();
+  });
+  request.fail(function (http_error) {
+    //Code à jouer en cas d'éxécution en erreur du script du PHP
+
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+});
+// LISTEUSER()
+function listeUsers() {
+  let request = $.ajax({
+    type: "GET",
+    url: "ListeUsers.php",
+    dataType: "html",
+  });
+
+  request.done(function (response) {
+    $("body").html(response);
+  });
+
+  request.fail(function (http_error) {
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+}
+//FORMMODIF
+
+function formmodif(data) {
+  let request = $.ajax({
+    type: "POST",
+    url: "ModifProfil.php",
+    data: data,
+    //Rq importante : ne faites pas la confusion entre le format json d'envoi de données et le type de retour
+    //format d'envoi de données : tjr objet json
+    dataType: "html",
+    //dataType : le format de la reponse du serveur (reception)
+  });
+
+  request.done(function (response) {
+    console.log(response);
+  });
+
+  request.fail(function (http_error) {
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+}
+//function pour transformer notre tab en objet avec les bonnes cles:
+function tabToObject(tab) {
+  obj = {};
+
+  for (i = 0; i < tab.length; i++) {
+    cle = tab[i].name;
+    valeur = tab[i].value;
+    obj[cle] = valeur;
+  }
+  //pour ajouter des elements à notre obj, on utilise la syntaxe obj.cle=valeur;expemple : obj.numSecu = 46495565;
+
+  return obj;
+}
