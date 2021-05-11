@@ -42,11 +42,26 @@ class ModelUser
 
         ]);
     }
-    public static function suppUser($id){
-        $idcon=connexion();
-        $requetModif=$idcon->prepare("DELETE FROM user  WHERE id = :id");
+    public static function suppUser($id)
+    {
+        $idcon = connexion();
+        $requetModif = $idcon->prepare("DELETE FROM user  WHERE id = :id");
         $requetModif->execute([
             ':id' => $id,
-         ]);
+        ]);
+    }
+    public static function ajoutConnexion($mail, $pass)
+    {
+        $idcon = connexion();
+        $requette = $idcon->prepare('INSERT INTO connexion values (?,?)');
+        $requette->execute(array($mail, $pass));
+    }
+    public static function getEmail($mail)
+    {
+        $idcon = connexion();
+        $requete = $idcon->prepare('SELECT * FROM connexion WHERE mail = :mail
+        ');
+        $requete->execute([":mail" => $mail]);
+        return $requete->fetch();
     }
 }

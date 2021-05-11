@@ -59,6 +59,12 @@ class ViewTemplate
                     <li class="nav-item">
                         <a class="nav-link" href="ListeReference.php">ListeReference</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Inscription.php">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Login.php">Login</a>
+                    </li>
 
 
                 </ul>

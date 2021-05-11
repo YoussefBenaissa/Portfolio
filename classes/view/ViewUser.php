@@ -127,7 +127,7 @@ class ViewUser
                         </button>
                     </div>
                     <div class="modal-body ">
-                        <p> azesdfsdfsdf</p>
+                        
 
                     </div>
                     <div class="modal-footer">
@@ -211,5 +211,21 @@ class ViewUser
             </form>
         </div>
 
+    <?php }
+    public static function forminscription() // inscription connexion
+    {
+    ?>
+        <form class="container text-center mt-5 " method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+            <h5> Connexion</h5>
+
+            <div class="form-group">
+                <input type="email" id="mail" class="fadeIn second" name="mail" placeholder="login">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+
+            </div>
+            <div><input type="submit" name="log-in" class="fadeIn fourth" value="Creer"></div>
+
+
+        </form>
 <?php }
 }

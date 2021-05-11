@@ -52,8 +52,10 @@ $("#form").submit(function (e) {
   let types = ["nom", "prenom", "tel"];
   valider(donnees, types, e);
 });
+
 $("#form2").submit(function (e) {
   e.preventDefault();
+
   let donnees = [
     $("#id").val(),
     $("#nom2").val(),
@@ -64,8 +66,11 @@ $("#form2").submit(function (e) {
   valider(donnees, types, e);
   let donneesForm = $(this).serializeArray(); // cette fontion retourne un tab de la forme  Object { name: "id", value: "11" }
   console.log(donneesForm);
-  data= tabToObject(donneesForm);
-  
+  if ($("#erreurs").is(":empty")) {
+    data = tabToObject(donneesForm);
+    data.modif = ""; // fait reference au buton submit et dc on rajoute une cle modif vide qui fait reference au buton
+    formmodif(data);
+  }
 });
 
 /*explication
@@ -164,28 +169,7 @@ ensuite, je mets ce contenu généré (alerte) dans la div qui a l'id erreur
 $(".supp-user").click(function () {
   $(".lien-supp").attr("href", "DeleteProfil.php?id=" + $(this).attr("id"));
 });
-// Modif User
-$(".modif-user").click(function (e) {
-  e.preventDefault();
-  let request = $.ajax({
-    type: "GET",
-    url: $(this).attr("href"),
-    dataType: "html",
-  });
 
-  request.done(function (reponse) {
-    $(".modal-modif .modal-body").html(reponse); // utiliser la console log pour visualiser le retour de la requette
-  });
-
-  request.fail(function (http_error) {
-    //Code à jouer en cas d'éxécution en erreur du script du PHP
-
-    let server_msg = http_error.responseText;
-    let code = http_error.status;
-    let code_label = http_error.statusText;
-    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
-  });
-});
 //Suprimer User
 $(".lien-supp").click(function (e) {
   e.preventDefault();
@@ -200,6 +184,28 @@ $(".lien-supp").click(function (e) {
     $(".annuler").trigger("click"); //je génère un clic artficiel sur le bouton annuler $(".annuler").click(); cette methode marche aussi
     listeUsers();
   });
+  request.fail(function (http_error) {
+    //Code à jouer en cas d'éxécution en erreur du script du PHP
+
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+});
+// Modif User
+$(".modif-user").click(function (e) {
+  e.preventDefault();
+  let request = $.ajax({
+    type: "GET",
+    url: $(this).attr("href"),
+    dataType: "html",
+  });
+
+  request.done(function (reponse) {
+    $(".modal-modif .modal-body").html(reponse); // utiliser la console log pour visualiser le retour de la requette
+  });
+
   request.fail(function (http_error) {
     //Code à jouer en cas d'éxécution en erreur du script du PHP
 
@@ -242,7 +248,7 @@ function formmodif(data) {
   });
 
   request.done(function (response) {
-    console.log(response);
+    listeUsers();
   });
 
   request.fail(function (http_error) {
@@ -264,4 +270,129 @@ function tabToObject(tab) {
   //pour ajouter des elements à notre obj, on utilise la syntaxe obj.cle=valeur;expemple : obj.numSecu = 46495565;
 
   return obj;
+}
+// ajax du form connexion
+$("#formConnexion").submit(function (e) {
+  e.preventDefault();
+
+  let request = $.ajax({
+    type: "GET",
+    url: "Accueil.php",
+    dataType: "html",
+  });
+
+  request.done(function (response) {
+    $("body").html(response);
+  });
+
+  request.fail(function (http_error) {
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+});
+
+//ajax modal viewcompt: suppression compt
+$(".supp-comp").click(function () {
+  $(".btn-supp").attr("href", "SUPPTEST.php?id=" + $(this).attr("id"));
+});
+$(".btn-supp").click(function (e) {
+  e.preventDefault();
+
+  let request = $.ajax({
+    type: "GET",
+    url: $(this).attr("href"),
+    dataType: "html",
+  });
+
+  request.done(function (reponse) {
+    $(".annuler").trigger("click"); //je génère un clic artficiel sur le bouton annuler $(".annuler").click(); cette methode marche aussi
+    listeComp();
+  });
+  request.fail(function (http_error) {
+    //Code à jouer en cas d'éxécution en erreur du script du PHP
+
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+});
+
+// Ajax modifier comp:
+
+$(".modif-comp").click(function (e) {
+  e.preventDefault();
+
+  let request = $.ajax({
+    type: "GET",
+    url: $(this).attr("href"),
+    dataType: "html",
+  });
+
+  request.done(function (reponse) {
+    $(".modal-modif .modal-body").html(reponse); // utiliser la console log pour visualiser le retour de la requette
+  });
+
+  request.fail(function (http_error) {
+    //Code à jouer en cas d'éxécution en erreur du script du PHP
+
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+});
+
+//formmodifcomp:
+$("#modif_comp").submit(function (e) {
+  e.preventDefault();
+  let donnees = {
+    id: $("#id").val(),
+    nom: $("#nom").val(),
+    domaine: $("#domaine").val(),
+    description: $("#description").val(),
+    niveau: $("#niveau").val(),
+    modifier: "",
+  };
+
+  let request = $.ajax({
+    type: "POST",
+    url: "ModifComp.php",
+    data: donnees,
+    dataType: "html",
+  });
+
+  request.done(function (response) {
+    listeComp();
+  });
+
+  request.fail(function (http_error) {
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
+});
+
+//listecomp ajax:
+
+function listeComp() {
+  let request = $.ajax({
+    type: "GET",
+    url: "controllertest.php",
+    dataType: "html",
+  });
+
+  request.done(function (response) {
+    $("body").html(response);
+  });
+
+  request.fail(function (http_error) {
+    let server_msg = http_error.responseText;
+    let code = http_error.status;
+    let code_label = http_error.statusText;
+    alert("Erreur " + code + " (" + code_label + ") : " + server_msg);
+  });
 }
